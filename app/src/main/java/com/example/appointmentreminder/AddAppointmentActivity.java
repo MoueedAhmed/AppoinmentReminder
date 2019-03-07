@@ -3,8 +3,9 @@ package com.example.appointmentreminder;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class AddAppointmentActivity extends AppCompatActivity {
+import java.util.ArrayList;
 
+public class AddAppointmentActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
