@@ -1,10 +1,12 @@
 package com.example.appointmentreminder;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -15,13 +17,24 @@ import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
     public ArrayList<Appointment> appointmentArrayList = new ArrayList<Appointment>();
+    Button buttonAddAppoinmentMain;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        buttonAddAppoinmentMain = findViewById(R.id.buttonAddAppoinmentMain);
+        buttonAddAppoinmentMain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivityForResult(new Intent(MainActivity.this, AddAppointmentActivity.class),1);
+            }
+        });
+
+        //populate some test data to display in table rows
         CreateSomeTestAppointmentsToStartWith();
     }
 
+    //Helper method to populate test data
     private void CreateSomeTestAppointmentsToStartWith() {
         appointmentArrayList.add(new Appointment("Doctors Visit","Health", "Oct", 9, 2016, 9, 00, "AM"));
         appointmentArrayList.add(new Appointment("Hair Cut appointment","Personal","Oct", 10, 2016,9,30,"AM"));
@@ -35,6 +48,8 @@ public class MainActivity extends AppCompatActivity {
             PopulateTable(i);
         }
     }
+
+    //helper method used with CreateSomeTestAppointmentsToStartWith()
     private void PopulateTable(int arrayListCounter) {
         TableLayout appointmentTBL = (TableLayout) findViewById(R.id.tableLayoutMain);
 
@@ -64,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
         appointmentTBL.addView(newTableRow,arrayListCounter+1);
     }
 
+    //helper method used with CreateSomeTestAppointmentsToStartWith(), used to get date or time returns as String
     private String SetToDateAndTime(Appointment appointment){
         long currentDateAndTime = System.currentTimeMillis(); //Todays Date
         SimpleDateFormat formatDate = new SimpleDateFormat("MMM d, yyyy"); //Date Format
