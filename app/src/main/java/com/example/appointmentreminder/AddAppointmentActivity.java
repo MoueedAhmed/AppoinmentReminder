@@ -3,13 +3,17 @@ package com.example.appointmentreminder;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -35,7 +39,7 @@ public class AddAppointmentActivity extends AppCompatActivity {
 
         txtDate = findViewById(R.id.textViewDate);
         txtTime = findViewById(R.id.textViewTime);
-
+        Button buttonAddAppointment = findViewById(R.id.buttonAddAppoinment);
         Button buttonCancel = findViewById(R.id.buttonCancel);
 
         //Closes AddAppointmentActivity
@@ -43,6 +47,38 @@ public class AddAppointmentActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 finish();
+            }
+        });
+
+        //Closes AddAppointmentActivity and returns the information entered in each field
+        buttonAddAppointment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EditText editAppointmentName = (EditText) findViewById(R.id.editTextName);
+                Spinner spinnerAppointmentType = (Spinner) findViewById(R.id.spinner);
+                if(!(editAppointmentName.getText().toString()).isEmpty()){
+                    Intent intent = new Intent();
+
+                    intent.putExtra("name", editAppointmentName.getText().toString());
+
+                    intent.putExtra("type", spinnerAppointmentType.getSelectedItem().toString());
+
+                    intent.putExtra("monthOfYear", DisplayTheMonthInCharacters(month));
+                    intent.putExtra("dayOfMonth", day);
+                    intent.putExtra("year", year);
+
+                    intent.putExtra("hour", FormatTheHour(hour));
+                    intent.putExtra("minute", minute);
+                    intent.putExtra("AMorPM", AMorPM(hour));
+
+                    setResult(RESULT_OK, intent);
+
+                    finish();
+                }
+                else{
+                    Toast toast = Toast.makeText(AddAppointmentActivity.this, "Please enter an Appointment Name", Toast.LENGTH_SHORT);
+                    toast.show();
+                }
             }
         });
 
@@ -139,5 +175,49 @@ public class AddAppointmentActivity extends AppCompatActivity {
         return null;
     }
 
+
+    //Returns the Month Abbreviation for the corresponding number.
+    private String DisplayTheMonthInCharacters(int passedMonth){
+        switch(passedMonth){
+            case 0:
+                return "Jan";
+            case 1:
+                return"Feb";
+            case 2:
+                return"Mar";
+            case 3:
+                return"Apr";
+            case 4:
+                return"May";
+            case 5:
+                return"Jun";
+            case 6:
+                return"Jul";
+            case 7:
+                return"Aug";
+            case 8:
+                return"Sept";
+            case 9:
+                return"Oct";
+            case 10:
+                return"Nov";
+            case 11:
+                return"Dec";
+
+        }
+        return "";
+    }
+
+    //Converts the 24 hours PassedHour to a 12 Hour time.
+    private int FormatTheHour(int passedHour){
+        if (passedHour > 12){ passedHour -= 12; }
+        return passedHour;
+    }
+
+    //Returns AM or PM depending on the hour (1-24)
+    private String AMorPM(int passedHour){
+        if (passedHour > 12){ return "PM"; }
+        else{ return "AM"; }
+    }
 
 }
