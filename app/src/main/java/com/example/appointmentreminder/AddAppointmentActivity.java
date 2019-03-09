@@ -73,6 +73,9 @@ public class AddAppointmentActivity extends AppCompatActivity {
 
                     setResult(RESULT_OK, intent);
 
+                    Toast toast = Toast.makeText(AddAppointmentActivity.this, "Appointment Added!", Toast.LENGTH_SHORT);
+                    toast.show();
+
                     finish();
                 }
                 else{

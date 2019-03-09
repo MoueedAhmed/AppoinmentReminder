@@ -36,13 +36,13 @@ public class MainActivity extends AppCompatActivity {
 
     //Helper method to populate test data
     private void CreateSomeTestAppointmentsToStartWith() {
-        appointmentArrayList.add(new Appointment("Doctors Visit","Health", "Oct", 9, 2016, 9, 00, "AM"));
-        appointmentArrayList.add(new Appointment("Hair Cut appointment","Personal","Oct", 10, 2016,9,30,"AM"));
-        appointmentArrayList.add(new Appointment("Meeting with Accountant","Personal","Oct", 11, 2016,11,00,"AM"));
-        appointmentArrayList.add(new Appointment("Boss/HR Meeting","Work","Oct", 12, 2016,2,30,"PM"));
-        appointmentArrayList.add(new Appointment("Teacher Conference","School","Nov", 1, 2016,9,30,"AM"));
-        appointmentArrayList.add(new Appointment("Dentist For Son","Health","Nov", 1, 2016,9,30,"AM"));
-        appointmentArrayList.add(new Appointment("Dinner With Friends","Other","Mar", 8, 2019,9,30,"AM"));
+//        appointmentArrayList.add(new Appointment("Doctors Visit","Health", "Oct", 9, 2016, 9, 00, "AM"));
+//        appointmentArrayList.add(new Appointment("Hair Cut appointment","Personal","Oct", 10, 2016,9,30,"AM"));
+//        appointmentArrayList.add(new Appointment("Meeting with Accountant","Personal","Oct", 11, 2016,11,00,"AM"));
+//        appointmentArrayList.add(new Appointment("Boss/HR Meeting","Work","Oct", 12, 2016,2,30,"PM"));
+//        appointmentArrayList.add(new Appointment("Teacher Conference","School","Nov", 1, 2016,9,30,"AM"));
+//        appointmentArrayList.add(new Appointment("Dentist For Son","Health","Nov", 1, 2016,9,30,"AM"));
+//        appointmentArrayList.add(new Appointment("Dinner With Friends","Other","Mar", 8, 2019,9,30,"AM"));
 
         for(int i = 0; i < appointmentArrayList.size(); i++){
             PopulateTable(i);
@@ -91,5 +91,23 @@ public class MainActivity extends AppCompatActivity {
         }
         return appointment.monthDate +" " + appointment.dayDate +", " + appointment.yearDate; //Otherwise, return the date
 
+    }
+
+    //Returns information passed from addAppointmentActivity
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1) {
+            if(resultCode == RESULT_OK) {
+
+                //Creates a new appointment with the information passed
+                appointmentArrayList.add(new Appointment(
+                        data.getStringExtra("name"),data.getStringExtra("type"),
+                        data.getStringExtra("monthOfYear"), data.getIntExtra("dayOfMonth", 0), data.getIntExtra("year", 1111),
+                        data.getIntExtra("hour", 11),data.getIntExtra("minute", 11),data.getStringExtra("AMorPM")));
+                //Displays new appointment on in the table
+                PopulateTable(appointmentArrayList.size()-1);
+            }
+        }
     }
 }
