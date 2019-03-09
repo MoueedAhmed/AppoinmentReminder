@@ -26,14 +26,14 @@ public class AddAppointmentActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_appointment);
 
+        txtDate = findViewById(R.id.textViewDate);
+        txtTime = findViewById(R.id.textViewTime);
         //set current date and time
         setCurrentDateAndTimeOnView();
     }
 
     //helper method to set current date and time
     public void setCurrentDateAndTimeOnView() {
-        txtDate = (TextView)findViewById(R.id.textViewDate);
-        txtTime = (TextView)findViewById(R.id.textViewTime);
 
         final Calendar c = Calendar.getInstance();
         year = c.get(Calendar.YEAR);
