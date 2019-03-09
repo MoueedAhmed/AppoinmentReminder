@@ -6,6 +6,7 @@ import android.app.TimePickerDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -34,6 +35,16 @@ public class AddAppointmentActivity extends AppCompatActivity {
 
         txtDate = findViewById(R.id.textViewDate);
         txtTime = findViewById(R.id.textViewTime);
+
+        Button buttonCancel = findViewById(R.id.buttonCancel);
+
+        //Closes AddAppointmentActivity
+        buttonCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         //When Date Text View is touched, opens a Date Picker Dialog
         txtDate.setOnClickListener(new View.OnClickListener() {
