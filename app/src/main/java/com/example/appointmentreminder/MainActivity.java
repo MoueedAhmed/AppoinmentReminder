@@ -31,18 +31,39 @@ public class MainActivity extends AppCompatActivity {
         });
 
         //populate some test data to display in table rows
-        CreateSomeTestAppointmentsToStartWith();
+        if (savedInstanceState == null) {
+            CreateSomeTestAppointmentsToStartWith();
+        }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState)
+    {
+        super.onSaveInstanceState(outState);
+        outState.putParcelableArrayList("Appointment_Array_List", appointmentArrayList);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState)
+    {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        appointmentArrayList = savedInstanceState.getParcelableArrayList("Appointment_Array_List");
+
+        for(int i = 0; i < appointmentArrayList.size();i++) {
+            PopulateTable(i);
+        }
     }
 
     //Helper method to populate test data
     private void CreateSomeTestAppointmentsToStartWith() {
-//        appointmentArrayList.add(new Appointment("Doctors Visit","Health", "Oct", 9, 2016, 9, 00, "AM"));
-//        appointmentArrayList.add(new Appointment("Hair Cut appointment","Personal","Oct", 10, 2016,9,30,"AM"));
-//        appointmentArrayList.add(new Appointment("Meeting with Accountant","Personal","Oct", 11, 2016,11,00,"AM"));
-//        appointmentArrayList.add(new Appointment("Boss/HR Meeting","Work","Oct", 12, 2016,2,30,"PM"));
-//        appointmentArrayList.add(new Appointment("Teacher Conference","School","Nov", 1, 2016,9,30,"AM"));
-//        appointmentArrayList.add(new Appointment("Dentist For Son","Health","Nov", 1, 2016,9,30,"AM"));
-//        appointmentArrayList.add(new Appointment("Dinner With Friends","Other","Mar", 8, 2019,9,30,"AM"));
+        appointmentArrayList.add(new Appointment("Doctors Visit","Health", "Oct", 9, 2016, 9, 00, "AM"));
+        appointmentArrayList.add(new Appointment("Hair Cut appointment","Personal","Oct", 10, 2016,9,30,"AM"));
+        appointmentArrayList.add(new Appointment("Meeting with Accountant","Personal","Oct", 11, 2016,11,00,"AM"));
+        appointmentArrayList.add(new Appointment("Boss/HR Meeting","Work","Oct", 12, 2016,2,30,"PM"));
+        appointmentArrayList.add(new Appointment("Teacher Conference","School","Nov", 1, 2016,9,30,"AM"));
+        appointmentArrayList.add(new Appointment("Dentist For Son","Health","Nov", 1, 2016,9,30,"AM"));
+        appointmentArrayList.add(new Appointment("Dinner With Friends","Other","Mar", 8, 2019,9,30,"AM"));
 
         for(int i = 0; i < appointmentArrayList.size(); i++){
             PopulateTable(i);
