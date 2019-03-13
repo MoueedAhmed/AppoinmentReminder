@@ -68,7 +68,7 @@ public class AddAppointmentActivity extends AppCompatActivity {
                     intent.putExtra("year", year);
 
                     intent.putExtra("hour", FormatTheHour(hour));
-                    intent.putExtra("minute", minute);
+                    intent.putExtra("minute", FormatTheMinute(minute));
                     intent.putExtra("AMorPM", AMorPM(hour));
 
                     setResult(RESULT_OK, intent);
@@ -221,6 +221,15 @@ public class AddAppointmentActivity extends AppCompatActivity {
     private String AMorPM(int passedHour){
         if (passedHour > 12){ return "PM"; }
         else{ return "AM"; }
+    }
+
+    //Meant to correct the display minute for 0-9 "00 vs 0"
+    private String FormatTheMinute(int passedMinute){
+        String forwardMinute = Integer.toString(passedMinute);
+        if(passedMinute < 10){
+            forwardMinute = "0" + forwardMinute;
+        }
+        return forwardMinute;
     }
 
 }

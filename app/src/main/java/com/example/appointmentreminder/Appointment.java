@@ -11,12 +11,12 @@ public class Appointment implements Parcelable {
     public int dayDate;
     public int yearDate;
     public int hourTime;
-    public int minuteTime;
+    public String minuteTime;
     public String AMorPMTime;
 
     public Appointment(String passedAppointmentName, String passedAppointType,
                        String passedAppointmentDateMonth, int passedAppointmentDateDay, int passedAppointmentDateYear,
-                       int passedAppointmentTimeHour, int passedAppointmentTimeMinute, String passedAppointmentTimeAMorPM){
+                       int passedAppointmentTimeHour, String passedAppointmentTimeMinute, String passedAppointmentTimeAMorPM){
         name = passedAppointmentName;
         type = passedAppointType;
         monthDate = passedAppointmentDateMonth;
@@ -34,7 +34,7 @@ public class Appointment implements Parcelable {
         dayDate = in.readInt();
         yearDate = in.readInt();
         hourTime = in.readInt();
-        minuteTime = in.readInt();
+        minuteTime = in.readString();
         AMorPMTime = in.readString();
     }
 
@@ -63,7 +63,7 @@ public class Appointment implements Parcelable {
         dest.writeInt(dayDate);
         dest.writeInt(yearDate);
         dest.writeInt(hourTime);
-        dest.writeInt(minuteTime);
+        dest.writeString(minuteTime);
         dest.writeString(AMorPMTime);
     }
 
